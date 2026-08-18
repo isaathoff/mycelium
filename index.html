@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mycelium</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍄</text></svg>">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/vendor/marked.js" defer></script>
+<script src="js/frontmatter.js" defer></script>
+<script src="js/cards.js" defer></script>
+<script src="js/graph.js" defer></script>
+<script src="js/app.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-emoji">🍄</span>
+    <span class="brand-name">Mycelium</span>
+  </div>
+  <nav class="views">
+    <button class="view-btn active" data-view="feed">Feed</button>
+    <button class="view-btn" data-view="graph">Brain</button>
+  </nav>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search cards, tags, people…">
+    <div id="filters" class="filters"></div>
+  </div>
+</header>
+
+<main>
+  <section id="feed-view" class="view active">
+    <div id="feed" class="feed"></div>
+    <p id="empty-state" class="empty-state" hidden>No cards match your search.</p>
+  </section>
+
+  <section id="graph-view" class="view">
+    <canvas id="graph-canvas"></canvas>
+    <div id="graph-tooltip" class="graph-tooltip" hidden></div>
+  </section>
+</main>
+
+<footer class="statusbar">
+  <span id="status-text">Loading cards…</span>
+</footer>
+
+</body>
+</html>
