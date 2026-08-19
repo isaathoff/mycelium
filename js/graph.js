@@ -42,13 +42,17 @@ const Graph = (() => {
   }
 
   function setData(cards) {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
+    // Seed with a fixed virtual layout size rather than the container's
+    // real bounding rect: setData can be called before the graph view has
+    // ever been shown (e.g. right after cards finish loading), at which
+    // point display:none would make the rect 0x0 and collapse every node
+    // to the same point. Real-time centering in tick() still uses the
+    // live rect once the view is actually visible.
+    const cx = 450, cy = 320;
 
     nodes = cards.map((card, i) => {
-      const angle = (i / cards.length) * Math.PI * 2;
-      const radius = Math.min(rect.width, rect.height) * 0.3;
+      const angle = (i / Math.max(cards.length, 1)) * Math.PI * 2;
+      const radius = 190;
       return {
         id: card.id,
         title: card.title,
@@ -82,6 +86,7 @@ const Graph = (() => {
 
   function tick() {
     const rect = canvas.parentElement.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return; // hidden (display:none) — skip physics rather than pulling toward (0,0)
     const cx = rect.width / 2;
     const cy = rect.height / 2;
     const REPULSION = 2600;

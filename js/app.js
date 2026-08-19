@@ -1,17 +1,20 @@
-// Wires up data loading, the feed view (flip cards), the brain/graph view,
-// search + category filters, and simple #hash deep-linking to a card.
+// Wires up the PIN gate, data loading, the feed view (flip cards), the
+// brain/graph view, search + category filters, the language switcher, and
+// simple #hash deep-linking to a card.
 
 (async function () {
   const feedEl = document.getElementById("feed");
   const emptyStateEl = document.getElementById("empty-state");
   const searchEl = document.getElementById("search");
   const filtersEl = document.getElementById("filters");
+  const langSwitcherEl = document.getElementById("lang-switcher");
   const statusEl = document.getElementById("status-text");
   const graphCanvas = document.getElementById("graph-canvas");
 
   let cardsData = { cards: [], byId: new Map() };
   let activeCategory = "all";
   let query = "";
+  let lang = getLang();
 
   function matches(card) {
     if (activeCategory !== "all" && card.category !== activeCategory) return false;
@@ -38,7 +41,7 @@
       .map((c) => `<button class="conn-chip" data-goto="${c.id}">${c.emoji ? c.emoji + " " : ""}${c.title}</button>`)
       .join("");
 
-    const tagChips = card.tags.map((t) => `<span class="tag-chip">#${t}</span>`).join("");
+    const tagChips = card.tags.map((tag) => `<span class="tag-chip">#${tag}</span>`).join("");
 
     el.innerHTML = `
       <div class="card-inner">
@@ -47,18 +50,18 @@
           <div class="card-title-bar">
             <h3>${card.title}</h3>
             <div class="card-badge-row">
-              <span class="card-badge">${card.category}</span>
+              <span class="card-badge">${categoryLabel(card.category, lang)}</span>
               <span class="card-links-count">${connections.length ? "🔗 " + connections.length : ""}</span>
             </div>
           </div>
         </div>
         <div class="card-face card-back">
           <div class="card-back-inner">
-            <span class="close-hint">tap to flip back</span>
+            <span class="close-hint">${t("tap_to_flip", lang)}</span>
             <div class="card-back-title">${card.title}</div>
             ${tagChips ? `<div class="tag-row">${tagChips}</div>` : ""}
             ${card.html}
-            ${connChips ? `<h4>Connections</h4><div class="link-row">${connChips}</div>` : ""}
+            ${connChips ? `<h4>${t("connections", lang)}</h4><div class="link-row">${connChips}</div>` : ""}
           </div>
         </div>
       </div>
@@ -104,30 +107,33 @@
     return card ? matches(card) : true;
   }
 
+  function styleFilterChip(btn, isActive) {
+    btn.classList.toggle("active", isActive);
+    if (isActive && btn.dataset.cat !== "all") {
+      btn.style.background = Cards.categoryColor(btn.dataset.cat);
+      btn.style.borderColor = "transparent";
+      btn.style.color = "#0f1216";
+    } else {
+      btn.style.background = "";
+      btn.style.borderColor = "";
+      btn.style.color = "";
+    }
+  }
+
   function renderFilters() {
     const categories = ["all", ...new Set(cardsData.cards.map((c) => c.category))];
     filtersEl.innerHTML = categories
       .map((cat) => {
-        const color = cat === "all" ? "" : `style="--chip-color:${Cards.categoryColor(cat)}"`;
-        return `<button class="filter-chip${cat === "all" ? " active" : ""}" data-cat="${cat}">${cat}</button>`;
+        const label = cat === "all" ? t("filter_all", lang) : categoryLabel(cat, lang);
+        return `<button class="filter-chip${cat === activeCategory ? " active" : ""}" data-cat="${cat}">${label}</button>`;
       })
       .join("");
 
     filtersEl.querySelectorAll(".filter-chip").forEach((btn) => {
+      styleFilterChip(btn, btn.dataset.cat === activeCategory);
       btn.addEventListener("click", () => {
         activeCategory = btn.dataset.cat;
-        filtersEl.querySelectorAll(".filter-chip").forEach((b) => {
-          b.classList.toggle("active", b === btn);
-          if (b === btn && b.dataset.cat !== "all") {
-            b.style.background = Cards.categoryColor(b.dataset.cat);
-            b.style.borderColor = "transparent";
-            b.style.color = "#0f1216";
-          } else {
-            b.style.background = "";
-            b.style.borderColor = "";
-            b.style.color = "";
-          }
-        });
+        filtersEl.querySelectorAll(".filter-chip").forEach((b) => styleFilterChip(b, b === btn));
         applyFilters();
       });
     });
@@ -142,12 +148,7 @@
       query = "";
       searchEl.value = "";
       activeCategory = "all";
-      filtersEl.querySelectorAll(".filter-chip").forEach((b) => {
-        b.classList.toggle("active", b.dataset.cat === "all");
-        b.style.background = "";
-        b.style.borderColor = "";
-        b.style.color = "";
-      });
+      filtersEl.querySelectorAll(".filter-chip").forEach((b) => styleFilterChip(b, b.dataset.cat === "all"));
       applyFilters();
     }
 
@@ -162,23 +163,11 @@
     location.hash = `card-${id}`;
   }
 
-  let graphReady = false;
-
   function switchView(view) {
     document.querySelectorAll(".view-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
     document.getElementById("feed-view").classList.toggle("active", view === "feed");
     document.getElementById("graph-view").classList.toggle("active", view === "graph");
-    if (view === "graph") {
-      Graph.resize();
-      if (!graphReady) {
-        // Seed positions only once the view has real, visible dimensions —
-        // doing this while display:none would collapse everything to 0x0.
-        Graph.setData(cardsData.cards);
-        Graph.setFilter(matches_id);
-        Graph.start();
-        graphReady = true;
-      }
-    }
+    if (view === "graph") Graph.resize();
   }
 
   document.querySelectorAll(".view-btn").forEach((btn) => {
@@ -202,19 +191,70 @@
     else if (hash.startsWith("card-")) openCard(hash.slice("card-".length));
   }
 
-  try {
-    cardsData = await Cards.loadAll();
-  } catch (err) {
-    statusEl.textContent = `Couldn't load cards: ${err.message}`;
-    console.error(err);
-    return;
+  function renderStaticText() {
+    document.documentElement.lang = lang;
+    document.querySelector('[data-view="feed"]').textContent = t("nav_feed", lang);
+    document.querySelector('[data-view="graph"]').textContent = t("nav_brain", lang);
+    searchEl.placeholder = t("search_placeholder", lang);
+    emptyStateEl.textContent = t("empty_state", lang);
   }
 
-  renderFilters();
-  renderFeed();
-  statusEl.textContent = `${cardsData.cards.length} card${cardsData.cards.length === 1 ? "" : "s"} · Mycelium`;
+  function renderLangSwitcher() {
+    langSwitcherEl.innerHTML = SUPPORTED_LANGS
+      .map((code) => `<button class="lang-btn${code === lang ? " active" : ""}" data-lang="${code}">${I18N[code].lang_name}</button>`)
+      .join("");
+    langSwitcherEl.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (btn.dataset.lang === lang) return;
+        lang = btn.dataset.lang;
+        setLang(lang);
+        switchLanguage();
+      });
+    });
+  }
+
+  async function loadCardsAndRender() {
+    try {
+      cardsData = await Cards.loadAll(lang);
+    } catch (err) {
+      statusEl.textContent = `${t("error_prefix", lang)} ${err.message}`;
+      console.error(err);
+      return false;
+    }
+    renderFilters();
+    renderFeed();
+    statusEl.textContent = t("status_cards", lang, cardsData.cards.length);
+    return true;
+  }
+
+  async function switchLanguage() {
+    renderStaticText();
+    renderLangSwitcher();
+    activeCategory = "all";
+    query = "";
+    searchEl.value = "";
+    statusEl.textContent = t("loading", lang);
+    const ok = await loadCardsAndRender();
+    if (ok) {
+      Graph.setData(cardsData.cards);
+      Graph.setFilter(matches_id);
+    }
+  }
+
+  statusEl.textContent = t("loading", lang);
+  await Gate.init(lang);
+
+  renderStaticText();
+  renderLangSwitcher();
 
   Graph.init(graphCanvas, { onNodeClick: openCard });
+
+  const loaded = await loadCardsAndRender();
+  if (!loaded) return;
+
+  Graph.setData(cardsData.cards);
+  Graph.setFilter(matches_id);
+  Graph.start();
 
   handleHash();
 })();

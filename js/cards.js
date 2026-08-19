@@ -16,14 +16,26 @@ const Cards = (() => {
     return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
   }
 
-  async function loadAll() {
+  // Cards are translated by adding cards/{id}.{lang}.md next to the base
+  // cards/{id}.md — a translation is optional per card; if it's missing,
+  // the base file is used instead, so nothing has to be translated all at
+  // once.
+  async function fetchCard(id, lang) {
+    if (lang) {
+      const translated = await fetch(`cards/${id}.${lang}.md`);
+      if (translated.ok) return translated;
+    }
+    return fetch(`cards/${id}.md`);
+  }
+
+  async function loadAll(lang) {
     const manifestRes = await fetch("cards/manifest.json");
     if (!manifestRes.ok) throw new Error("Could not load cards/manifest.json");
     const ids = await manifestRes.json();
 
     const results = await Promise.all(
       ids.map(async (id) => {
-        const res = await fetch(`cards/${id}.md`);
+        const res = await fetchCard(id, lang);
         if (!res.ok) {
           console.warn(`Mycelium: manifest lists "${id}" but cards/${id}.md is missing.`);
           return null;

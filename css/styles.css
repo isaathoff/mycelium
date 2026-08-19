@@ -356,6 +356,103 @@ main {
   z-index: 10;
 }
 
+/* ---------- Gate (PIN screen) ---------- */
+
+.app-shell { display: contents; }
+body.locked .app-shell { display: none; }
+
+.gate-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 1.5rem;
+  z-index: 100;
+}
+
+body:not(.locked) .gate-overlay { display: none; }
+
+.gate-box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
+
+.gate-emoji { font-size: 2.5rem; }
+
+.gate-title {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.gate-prompt {
+  margin: 0 0 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.gate-input {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  letter-spacing: 0.15em;
+  text-align: center;
+}
+
+.gate-submit {
+  background: var(--accent);
+  border: none;
+  color: #0f1216;
+  font-weight: 600;
+  padding: 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.gate-error {
+  margin: 0;
+  color: var(--cat-family);
+  font-size: 0.82rem;
+}
+
+/* ---------- Language switcher ---------- */
+
+.lang-switcher {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.lang-btn:hover { color: var(--text); }
+
+.lang-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0f1216;
+  font-weight: 700;
+}
+
 /* ---------- Status bar ---------- */
 
 .statusbar {

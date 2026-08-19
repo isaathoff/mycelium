@@ -1,18 +1,35 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>Mycelium</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍄</text></svg>">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/config.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/gate.js" defer></script>
 <script src="js/vendor/marked.js" defer></script>
 <script src="js/frontmatter.js" defer></script>
 <script src="js/cards.js" defer></script>
 <script src="js/graph.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
-<body>
+<body class="locked">
+
+<div id="gate-overlay" class="gate-overlay">
+  <form id="gate-form" class="gate-box">
+    <div class="gate-emoji">🍄</div>
+    <h1 class="gate-title">Mycelium</h1>
+    <p id="gate-prompt" class="gate-prompt"></p>
+    <input id="gate-pin" class="gate-input" type="password" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button id="gate-submit" class="gate-submit" type="submit"></button>
+    <p id="gate-error" class="gate-error" hidden></p>
+  </form>
+</div>
+
+<div id="app-shell" class="app-shell">
 
 <header class="topbar">
   <div class="brand">
@@ -24,15 +41,16 @@
     <button class="view-btn" data-view="graph">Brain</button>
   </nav>
   <div class="controls">
-    <input id="search" type="search" placeholder="Search cards, tags, people…">
+    <input id="search" type="search">
     <div id="filters" class="filters"></div>
+    <div id="lang-switcher" class="lang-switcher"></div>
   </div>
 </header>
 
 <main>
   <section id="feed-view" class="view active">
     <div id="feed" class="feed"></div>
-    <p id="empty-state" class="empty-state" hidden>No cards match your search.</p>
+    <p id="empty-state" class="empty-state" hidden></p>
   </section>
 
   <section id="graph-view" class="view">
@@ -42,8 +60,10 @@
 </main>
 
 <footer class="statusbar">
-  <span id="status-text">Loading cards…</span>
+  <span id="status-text"></span>
 </footer>
+
+</div>
 
 </body>
 </html>
