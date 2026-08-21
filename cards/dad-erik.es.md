@@ -2,7 +2,7 @@
 id: dad-erik
 title: Erik
 category: person
-emoji: 🎣
+image: assets/images/Test-img.png
 tags: [familia]
 links: []
 ---
