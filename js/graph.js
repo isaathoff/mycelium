@@ -63,8 +63,15 @@ const Graph = (() => {
         vx: 0,
         vy: 0,
         r: 8,
+        labelWidth: 0,
       };
     });
+
+    // Measure each label so the click/hover target can cover the text
+    // too, not just the small dot — titles routinely extend well past it.
+    ctx.font = "12px sans-serif";
+    for (const n of nodes) n.labelWidth = ctx.measureText(n.title).width;
+
     byId = new Map(nodes.map((n) => [n.id, n]));
 
     const seen = new Set();
@@ -216,10 +223,22 @@ const Graph = (() => {
   }
 
   function nodeAt(worldPt) {
+    const labelsVisible = transform.scale > 0.6;
     for (let i = nodes.length - 1; i >= 0; i--) {
       const n = nodes[i];
       const dx = n.x - worldPt.x, dy = n.y - worldPt.y;
       if (dx * dx + dy * dy <= (n.r + 4) * (n.r + 4)) return n;
+
+      // The label drawn under the dot (see draw()) is often what people
+      // actually aim for, especially for longer titles — count it too.
+      if (labelsVisible) {
+        const halfWidth = n.labelWidth / 2 + 4;
+        const top = n.y + n.r;
+        const bottom = n.y + n.r + 18;
+        if (worldPt.x >= n.x - halfWidth && worldPt.x <= n.x + halfWidth && worldPt.y >= top && worldPt.y <= bottom) {
+          return n;
+        }
+      }
     }
     return null;
   }
