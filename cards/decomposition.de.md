@@ -5,6 +5,7 @@ category: topic
 emoji: 🍂
 tags: [pilze, ökologie, boden]
 links: [mycelium-networks]
+image: assets/images/Test-img2.png
 ---
 
 Pilze gehören zu den wenigen Organismen, die Lignin abbauen können — den
