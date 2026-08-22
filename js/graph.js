@@ -264,6 +264,7 @@ const Graph = (() => {
   function onPointerUp() {
     dragNode = null;
     panning = false;
+    panStart = null;
   }
 
   function onWheel(e) {
