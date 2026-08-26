@@ -2,7 +2,7 @@
 id: dad-erik
 title: Erik
 category: person
-image: assets/images/Test-img.png
+image: assets/images/Presentation.gif
 tags: [familie]
 links: []
 ---
