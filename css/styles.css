@@ -4,15 +4,15 @@
   --text: #eef1f5;
   --text-dim: #a3adba;
   --border: #2a2f38;
-  --accent: #7ee787;
+  --accent: #b8d0c0;
   --shadow: 0 8px 24px rgba(0,0,0,0.35);
 
-  --cat-topic: #59c3e0;
-  --cat-family: #f28fad;
-  --cat-place: #8ea6f2;
-  --cat-event: #c79bf2;
-  --cat-person: #f2c94c;
-  --cat-default: #9aa5b1;
+  --cat-topic: #b8d4d8;
+  --cat-family: #e0c0c8;
+  --cat-place: #c8cce0;
+  --cat-event: #d4c8dc;
+  --cat-person: #e0d4b8;
+  --cat-default: #c8c8c8;
 }
 
 @media (prefers-color-scheme: light) {
