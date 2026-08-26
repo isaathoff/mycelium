@@ -7,12 +7,12 @@
   --accent: #b8d0c0;
   --shadow: 0 8px 24px rgba(0,0,0,0.35);
 
-  --cat-topic: #b8d4d8;
-  --cat-family: #e0c0c8;
-  --cat-place: #c8cce0;
-  --cat-event: #d4c8dc;
-  --cat-person: #e0d4b8;
-  --cat-default: #c8c8c8;
+  --cat-topic: #1c4a52;
+  --cat-family: #5c1f38;
+  --cat-place: #2b2f66;
+  --cat-event: #45185c;
+  --cat-person: #5c4413;
+  --cat-default: #333333;
 }
 
 @media (prefers-color-scheme: light) {
@@ -211,6 +211,7 @@ main {
 
 .card-back {
   transform: rotateY(180deg);
+  background: var(--card-accent, var(--bg-elevated));
 }
 
 /* front */
@@ -228,14 +229,14 @@ main {
 
 .card-title-bar {
   padding: 0.6rem 0.75rem;
-  background: var(--bg-elevated);
-  border-top: 1px solid var(--border);
+  background: var(--card-accent, var(--bg-elevated));
 }
 
 .card-title-bar h3 {
   margin: 0;
   font-size: 0.98rem;
   line-height: 1.25;
+  color: #fff;
 }
 
 .card-badge-row {
@@ -251,14 +252,14 @@ main {
   letter-spacing: 0.04em;
   padding: 0.12rem 0.5rem;
   border-radius: 999px;
-  background: var(--card-accent, var(--cat-default));
-  color: #0f1216;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
   font-weight: 700;
 }
 
 .card-links-count {
   font-size: 0.72rem;
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.7);
 }
 
 /* back */
@@ -268,6 +269,7 @@ main {
   overflow-y: auto;
   height: 100%;
   font-size: 0.85rem;
+  color: #fff;
 }
 
 .card-back-inner h1, .card-back-inner h2, .card-back-inner h3 {
@@ -280,7 +282,7 @@ main {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.7);
 }
 
 .card-back-title {
@@ -292,7 +294,7 @@ main {
 
 .card-back-inner p { margin: 0.35rem 0; line-height: 1.45; }
 .card-back-inner img { max-width: 100%; border-radius: 8px; }
-.card-back-inner a { color: var(--card-accent, var(--accent)); }
+.card-back-inner a { color: #fff; text-decoration: underline; }
 
 .tag-row, .link-row {
   display: flex;
@@ -305,23 +307,23 @@ main {
   font-size: 0.68rem;
   padding: 0.1rem 0.5rem;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.85);
 }
 
 .conn-chip {
   font-size: 0.72rem;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
-  border: 1px solid var(--card-accent, var(--border));
+  border: 1px solid rgba(255,255,255,0.45);
   background: transparent;
-  color: var(--text);
+  color: #fff;
   cursor: pointer;
 }
 
 .conn-chip:hover {
-  background: var(--card-accent, var(--border));
-  color: #0f1216;
+  background: #fff;
+  color: var(--card-accent, #111);
 }
 
 .close-hint {
@@ -329,7 +331,7 @@ main {
   top: 0.6rem;
   right: 0.7rem;
   font-size: 0.7rem;
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.6);
 }
 
 /* ---------- Graph / Brain view ---------- */
