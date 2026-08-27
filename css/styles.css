@@ -289,7 +289,6 @@ main {
   font-size: 1.02rem;
   font-weight: 700;
   margin-bottom: 0.4rem;
-  padding-right: 1.4rem;
 }
 
 .card-back-inner p { margin: 0.35rem 0; line-height: 1.45; }
@@ -324,14 +323,6 @@ main {
 .conn-chip:hover {
   background: #fff;
   color: var(--card-accent, #111);
-}
-
-.close-hint {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.7rem;
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.6);
 }
 
 /* ---------- Graph / Brain view ---------- */

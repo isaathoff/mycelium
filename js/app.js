@@ -57,7 +57,6 @@
         </div>
         <div class="card-face card-back">
           <div class="card-back-inner">
-            <span class="close-hint">${t("tap_to_flip", lang)}</span>
             <div class="card-back-title">${card.title}</div>
             ${tagChips ? `<div class="tag-row">${tagChips}</div>` : ""}
             ${card.html}
