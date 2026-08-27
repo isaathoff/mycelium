@@ -3,8 +3,8 @@ id: eva
 title: Eva
 category: person
 image: assets/images/eva.jpeg
-tags: [familie, Im Dullert 1, Kopenhagen 2025]
-links: []
+tags: [familie]
+links: [Birthe, Harald, Im Dullert 1, Kopenhagen 2025]
 ---
 
 Meine Mama. Und diejenige, die alles zusammenhält.
