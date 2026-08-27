@@ -4,7 +4,7 @@ title: Eva
 category: person
 image: assets/images/eva.jpeg
 tags: [family, Im Dullert 1, Copenhagen 2025]
-links: []
+links: [birthe, harald, family-house, copenhagen-2025]
 ---
 
 My mom. And the one who holds everything together.
