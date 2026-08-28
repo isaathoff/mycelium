@@ -4,11 +4,11 @@ title: Im Dullert 1
 category: place
 image: ./assets/images/im-dullert-1.jpeg
 tags: [orte, tradition]
-links: [eva, harald]
+links: [eva, harald, soeren, inga, birthe]
 ---
 
-Unser zu Hause.
+Unser Zuhause.
 
-Hier wurden Erinnerungen geschaffen - so alt wie Sören ist, denn das Haus wurde gebaut, als er noch ganz klein war.
+Hier wurden Erinnerungen geschaffen – so alt wie Sören selbst, denn das Haus wurde gebaut, als er noch ganz klein war.
 
-Es beherbergt Spaß, Streit, und tausende von tollen Erlebnissen. Denk nur an die Verkleidungskiste, die zum St. Martins Tag vom Dachboden geholt wurde - oder an den Garten, in dem im Sommer die Gartendusche für Abkühlung sorgt!
+Es hat Spaß und Streit erlebt, und tausende schöne Momente gesehen. Man denke nur an die Verkleidungskiste, die jedes Jahr zu St. Martin vom Dachboden geholt wird – oder an den Garten, in dem die Gartendusche im Sommer für Abkühlung sorgt!
