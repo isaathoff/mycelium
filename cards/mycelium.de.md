@@ -2,7 +2,7 @@
 id: mycelium
 title: Myzelium
 category: topic
-image:assets/images/mushroom-mycelium-structure.png.webp
+image: assets/images/mushroom-mycelium-structure.png.webp
 tags: [pilze, netzwerke, biologie]
 links: []
 ---
