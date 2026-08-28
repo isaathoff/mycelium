@@ -7,8 +7,8 @@ tags: [hongos, redes, biología]
 links: []
 ---
 
-Los árboles se comunican entre sí, pero no directamente. Al igual que en el juego del teléfono sin cables, necesitan un cable.
+Los árboles se comunican entre sí, pero no directamente. Como un teléfono de lata, necesitan un hilo con una lata en cada extremo.
 
-Ese cable es un hongo: no el sombrero que vemos en la parte superior, sino una red de células filiformes bajo tierra que conecta una raíz con otra.
+Ese hilo es un hongo: no el sombrero que vemos sobre la tierra, sino una red de células filiformes bajo tierra que conecta una raíz con otra.
 
-A través de esta red —el hongo— los árboles intercambian agua, nutrientes y señales.
+A través de esta red —el micelio— los árboles intercambian agua, nutrientes y señales.
