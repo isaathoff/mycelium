@@ -2,6 +2,7 @@
 id: mycelium
 title: Mycelium
 category: topic
+image: assets/images/mycelium.png
 tags: [fungi, networks, biology]
 links: []
 ---
