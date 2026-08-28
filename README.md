@@ -55,16 +55,19 @@ The interface (nav, search, filters, the PIN screen) supports German,
 English, and Spanish (Latin America) out of the box, switchable from the
 🌐 buttons in the header. Card *content* is translated per file:
 
-- `cards/your-card-id.md` — the base/fallback version.
-- `cards/your-card-id.de.md`, `cards/your-card-id.en.md`,
-  `cards/your-card-id.es.md` — optional translations.
+- `cards/your-card-id.md` — the English version (no language suffix).
+- `cards/your-card-id.de.md`, `cards/your-card-id.es.md` — German/Spanish.
 
-If a translation is missing, the base file is shown instead — so you
-never have to translate everything at once, and existing untranslated
-cards keep working exactly as before. Only `title`, `tags`, and the body
-need translating; keep `id`, `category`, `links`, and `people` identical
-across every language file for a card, since those are what keep
-connections and the Brain view consistent regardless of language.
+None of the three files are required — write whichever language you
+have. If a card is missing in the visitor's chosen language, it falls
+back through a fixed order: **English → German → Spanish**, using
+whichever of those exists first. So a German-only card still shows up
+(in German) for an English or Spanish visitor instead of disappearing,
+and you never have to translate everything at once. Only `title`,
+`tags`, and the body need translating; keep `id`, `category`, `links`,
+and `people` identical across every language file for a card, since
+those are what keep connections and the Brain view consistent
+regardless of language.
 
 **Connections are automatic in both directions.** If card A lists card B
 in `links` or `people`, B will show A as a connection too — you never

@@ -17,15 +17,26 @@ const Cards = (() => {
   }
 
   // Cards are translated by adding cards/{id}.{lang}.md next to the base
-  // cards/{id}.md — a translation is optional per card; if it's missing,
-  // the base file is used instead, so nothing has to be translated all at
-  // once.
+  // cards/{id}.md — a translation is optional per card. If the visitor's
+  // language is missing, we fall back through a fixed priority order
+  // (English, then German, then Spanish) rather than just giving up, so
+  // a card is as readable as possible even half-translated. The base,
+  // unsuffixed cards/{id}.md file is what "English" means here.
+  const FALLBACK_ORDER = ["en", "de", "es"];
+
+  function cardUrl(id, lang) {
+    return lang === "en" ? `cards/${id}.md` : `cards/${id}.${lang}.md`;
+  }
+
   async function fetchCard(id, lang) {
-    if (lang) {
-      const translated = await fetch(`cards/${id}.${lang}.md`);
-      if (translated.ok) return translated;
+    const order = [lang, ...FALLBACK_ORDER.filter((code) => code !== lang)];
+    let lastRes;
+    for (const code of order) {
+      const res = await fetch(cardUrl(id, code));
+      if (res.ok) return res;
+      lastRes = res;
     }
-    return fetch(`cards/${id}.md`);
+    return lastRes;
   }
 
   async function loadAll(lang) {
