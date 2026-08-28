@@ -2,7 +2,7 @@
 id: mycelium
 title: Micelio
 category: topic
-assets/images/mycelium.png
+image: assets/images/mycelium.png
 tags: [hongos, redes, biología]
 links: []
 ---
